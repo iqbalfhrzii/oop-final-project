@@ -90,7 +90,7 @@ public class MenuLogin extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 105, 62));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,7 +103,7 @@ public class MenuLogin extends javax.swing.JFrame {
             .addGap(0, 53, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(0, 51, 255));
+        jPanel2.setBackground(new java.awt.Color(0, 105, 62));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
