@@ -4,6 +4,11 @@
  */
 package Main;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,6 +43,7 @@ public class MenuLogin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -126,6 +132,13 @@ public class MenuLogin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jButton1.setText("Registrasi");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,6 +147,8 @@ public class MenuLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(41, 41, 41)
                         .addComponent(LoginButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
@@ -164,7 +179,9 @@ public class MenuLogin extends javax.swing.JFrame {
                     .addComponent(pswTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(33, 33, 33)
-                .addComponent(LoginButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LoginButton)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -172,27 +189,61 @@ public class MenuLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void showDatafromDB() {
+        try {
+        String url = "jdbc:mysql://127.0.0.1:3306/db_administrasi";
+        String username = "root";
+        String password = "iqbal";
+
+        Connection conn = DriverManager.getConnection(url, username, password);
+
+        // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
+        String sql = "SELECT * FROM login WHERE username = '"+userTxt.getText()+"' AND password = '"+pswTxt.getText()+"'";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        ResultSet rs = statement.executeQuery(sql);
+        if (rs.next()) {
+            String user = rs.getString("username");
+            String pass = rs.getString("password");
+            String status = rs.getString("hak_akses");
+            HakAkses.setUserLogin(status);
+                if (pass.equals(pass) && user.equals(user) && status.equals("admin")){
+                    MainMenu mainmenu = new MainMenu();
+                    mainmenu.setVisible(true);
+                    dispose();
+                }else if (pass.equals(pass) && user.equals(user) && status.equals("user")){
+                    MainMenu mainmenu = new MainMenu();
+                    mainmenu.setVisible(true);
+                    dispose();
+                } else{
+                    JOptionPane.showMessageDialog(null, "user atau password salah");
+                }
+        }
+
+        statement.close();
+        conn.close();
+        }
+        catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
+        }
+    }
+    
     private void userTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userTxtActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        String userName = "admin";
-        String password = "root";
-
-        if(userTxt.getText().equals(userName) && pswTxt.getText().equals(password)){
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.setVisible(true);
-            this.dispose();
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Username / Password Salah !", "Kesalahan", JOptionPane.ERROR_MESSAGE);
-        }// TODO add your handling code here:
+        showDatafromDB();
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void pswTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pswTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pswTxtActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Register register = new Register();
+        register.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,6 +282,7 @@ public class MenuLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LoginButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
