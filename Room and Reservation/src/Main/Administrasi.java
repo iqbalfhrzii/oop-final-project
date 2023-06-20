@@ -22,6 +22,7 @@ public class Administrasi extends javax.swing.JFrame {
 
     public Administrasi() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

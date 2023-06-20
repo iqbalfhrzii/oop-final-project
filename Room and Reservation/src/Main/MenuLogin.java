@@ -22,6 +22,7 @@ public class MenuLogin extends javax.swing.JFrame {
      */
     public MenuLogin() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

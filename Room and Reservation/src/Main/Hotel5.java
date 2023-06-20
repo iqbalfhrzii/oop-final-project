@@ -15,6 +15,7 @@ public class Hotel5 extends javax.swing.JFrame {
      */
     public Hotel5() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

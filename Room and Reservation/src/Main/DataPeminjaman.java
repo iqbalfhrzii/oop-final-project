@@ -25,6 +25,7 @@ public class DataPeminjaman extends javax.swing.JFrame {
      */
     public DataPeminjaman() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
